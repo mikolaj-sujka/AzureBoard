@@ -27,5 +27,13 @@ public class WorkItemEntityTypeConfiguration : IEntityTypeConfiguration<WorkItem
         builder.Property(x => x.RemainingWork).HasPrecision(14, 2);
 
         builder.Property(x => x.Priority).HasDefaultValue(1);
+
+        builder.HasMany(x => x.Comments)
+            .WithOne(x => x.WorkItem)
+            .HasForeignKey(x => x.WorkItemId);
+
+        builder.HasOne(x => x.Author)
+            .WithMany(x => x.WorkItems)
+            .HasForeignKey(x => x.AuthorId);
     }
 }

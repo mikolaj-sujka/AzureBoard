@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-namespace AzureBoard.Domain.Entities;
+﻿namespace AzureBoard.Domain.Entities;
 
 public class WorkItem
 {
@@ -17,4 +13,7 @@ public class WorkItem
     public string Activity { get; set; }
     public decimal RemainingWork { get; set; }
     public string Type { get; set; }
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public User Author { get; set; }
+    public Guid AuthorId { get; set; }
 }
