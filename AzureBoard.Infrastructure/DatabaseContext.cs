@@ -10,6 +10,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<WorkItemState> WorkItemStates { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

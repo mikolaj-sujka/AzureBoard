@@ -3,7 +3,6 @@
 public class WorkItem
 {
     public int Id { get; set; }
-    public string State { get; set; }
     public string Area { get; set; }
     public string IterationPath { get; set; }
     public uint Priority { get; set; }
@@ -16,4 +15,8 @@ public class WorkItem
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     public User Author { get; set; }
     public Guid AuthorId { get; set; }
+    public ICollection<Tag> Tags { get; set; } 
+    public WorkItemState WorkItemState { get; set; }
+    public int WorkItemStateId { get; set; }
+    // public ICollection<WorkItemTag> Tags { get; set; } = new List<WorkItemTag>();
 }

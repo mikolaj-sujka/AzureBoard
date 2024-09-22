@@ -12,7 +12,7 @@ public class WorkItemEntityTypeConfiguration : IEntityTypeConfiguration<WorkItem
 
         builder.HasKey(wi => wi.Id);
 
-        builder.Property(wi => wi.State).IsRequired(true);
+        builder.HasOne(wi => wi.WorkItemState).WithMany().HasForeignKey(x => x.WorkItemStateId);
 
         builder.Property(wi => wi.Area).HasColumnType("nvarchar(200)").IsRequired(true);
 
@@ -35,5 +35,17 @@ public class WorkItemEntityTypeConfiguration : IEntityTypeConfiguration<WorkItem
         builder.HasOne(x => x.Author)
             .WithMany(x => x.WorkItems)
             .HasForeignKey(x => x.AuthorId);
+
+        builder.HasMany(x => x.Tags)
+            .WithMany(x => x.WorkItems)
+            .UsingEntity<WorkItemTag>(
+                x => x.HasOne(w => w.Tag).WithMany().HasForeignKey(z => z.TagId),
+                x => x.HasOne(w => w.WorkItem).WithMany().HasForeignKey(z => z.WorkItemId),
+                x =>
+                {
+                    x.HasKey(x => new { x.WorkItemId, x.TagId });
+                    x.Property(w => w.PublicationDate).HasDefaultValueSql("getutcdate()");
+                }
+            );
     }
 }
